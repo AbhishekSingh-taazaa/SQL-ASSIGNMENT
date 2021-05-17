@@ -159,7 +159,7 @@ ORDER BY total_product ASC;
 
 SELECT * FROM order_details;
 	
- SELECT pro.product_name, s.suppiler_name, cus.customer_name, ordt.date_of_delivered FROM order_details ordt
+ SELECT ordt.order_id, pro.product_name, s.suppiler_name, cus.customer_name, ordt.date_of_delivered FROM order_details ordt
  JOIN products pro USING(product_id)
  JOIN customer cus USING(customer_id)
  JOIN suppliers s ON s.supplier_id=ordt.suppiler_id
@@ -167,3 +167,55 @@ SELECT * FROM order_details;
  	
 --FILTERING DATA	
 	
+--a on the basis of product name	
+ SELECT ordt.order_id, pro.product_name, s.suppiler_name, cus.customer_name, ordt.date_of_delivered FROM order_details ordt
+ JOIN products pro USING(product_id)
+ JOIN customer cus USING(customer_id)
+ JOIN suppliers s ON s.supplier_id=ordt.suppiler_id
+ WHERE pro.product_name ='T-Shirt'
+ ORDER BY ordt.date_of_delivered DESC;	
+ 
+--b on the basis of suppiler name 
+
+ SELECT ordt.order_id, pro.product_name, s.suppiler_name, cus.customer_name, ordt.date_of_delivered FROM order_details ordt
+ JOIN products pro USING(product_id)
+ JOIN customer cus USING(customer_id)
+ JOIN suppliers s ON s.supplier_id=ordt.suppiler_id
+ WHERE  s.suppiler_name ='John Snow'
+ ORDER BY ordt.date_of_delivered DESC;	
+ 
+--c on the basis of product code
+
+ SELECT ordt.order_id, pro.product_name, s.suppiler_name, cus.customer_name, ordt.date_of_delivered FROM order_details ordt
+ JOIN products pro USING(product_id)
+ JOIN customer cus USING(customer_id)
+ JOIN suppliers s ON s.supplier_id=ordt.suppiler_id
+ WHERE pro.product_code ='HPCHAMBER'
+ ORDER BY ordt.date_of_delivered DESC;	
+ 
+ --d supplied after a particular date
+ 
+  SELECT ordt.order_id, pro.product_name, s.suppiler_name, cus.customer_name, ordt.date_of_delivered FROM order_details ordt
+ JOIN products pro USING(product_id)
+ JOIN customer cus USING(customer_id)
+ JOIN suppliers s ON s.supplier_id=ordt.suppiler_id
+ WHERE ordt.date_of_delivered >'2021-05-09'
+ ORDER BY ordt.date_of_delivered DESC;	
+ 
+ --e supplied before a particular date
+ 
+  SELECT  ordt.order_id, pro.product_name, s.suppiler_name, cus.customer_name, ordt.date_of_delivered FROM order_details ordt
+ JOIN products pro USING(product_id)
+ JOIN customer cus USING(customer_id)
+ JOIN suppliers s ON s.supplier_id=ordt.suppiler_id
+ WHERE ordt.date_of_delivered < '2021-05-09'
+ ORDER BY ordt.date_of_delivered DESC;	
+ 
+ --Product has inventory more than or less than a given qty
+ SELECT  ordt.order_id, pro.product_name, s.suppiler_name, cus.customer_name, ordt.date_of_delivered FROM order_details ordt
+ JOIN products pro USING(product_id)
+ JOIN customer cus USING(customer_id)
+ JOIN inventory inv ON inv.product_id = pro.product_id
+ JOIN suppliers s ON s.supplier_id=ordt.suppiler_id
+ WHERE inv.product_quantity = 100
+ ORDER BY ordt.date_of_delivered DESC;	
